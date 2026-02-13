@@ -19,7 +19,7 @@ h1 {
 }
 
 img {
-    width: 250px;
+    width: 260px;
     border-radius: 20px;
     display: none;
     margin-top: 20px;
@@ -54,24 +54,22 @@ button {
 <h1>From DMs to Destiny 😘</h1>
 <p>No return, No refund 😈❤️</p>
 
-<img class="slide" src="images1.jpg">
-<img class="slide" src="images2.jpg">
-<img class="slide" src="images3.jpg">
-<img class="slide" src="images4.jpg">
-<img class="slide" src="images5.jpg">
-<img class="slide" src="images6.jpg">
+<img class="slide" src="./images1.jpg">
+<img class="slide" src="./images2.jpg">
+<img class="slide" src="./images3.jpg">
+<img class="slide" src="./images4.jpg">
 
 <br><br>
 <button onclick="startLove()">Click for Surprise ❤️</button>
 
 <audio id="music" loop>
-  <source src="song.mp3" type="audio/mpeg">
+  <source src="./song.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
 function startLove() {
-    document.getElementById("music").play();
+    document.getElementById("music").play().catch(()=>{});
     startSlideshow();
 }
 
@@ -80,17 +78,19 @@ let slideIndex = 0;
 function startSlideshow() {
     let slides = document.getElementsByClassName("slide");
 
+    slides[0].style.display = "block";
+
     setInterval(function() {
         for (let i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
         }
 
         slideIndex++;
-        if (slideIndex > slides.length) {
-            slideIndex = 1;
+        if (slideIndex >= slides.length) {
+            slideIndex = 0;
         }
 
-        slides[slideIndex - 1].style.display = "block";
+        slides[slideIndex].style.display = "block";
 
     }, 2000);
 }
@@ -101,11 +101,7 @@ setInterval(function() {
     heart.innerHTML = "❤️";
     heart.style.left = Math.random() * 100 + "vw";
     document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 5000);
-
+    setTimeout(() => heart.remove(), 5000);
 }, 300);
 
 </script>
