@@ -14,13 +14,12 @@ body {
     overflow: hidden;
 }
 
-/* Headings */
 h1 {
-    font-size: 40px;
+    font-size: 38px;
     margin-top: 20px;
 }
 
-/* BIG SURPRISE BUTTON */
+/* Surprise button */
 #startBtn {
     padding: 25px 60px;
     font-size: 28px;
@@ -34,7 +33,7 @@ h1 {
 }
 
 /* Photos */
-img {
+.slide {
     width: 80%;
     max-width: 650px;
     border-radius: 30px;
@@ -44,7 +43,7 @@ img {
 }
 
 /* Buttons */
-button.action {
+.action {
     padding: 18px 40px;
     font-size: 22px;
     border: none;
@@ -84,7 +83,7 @@ button.action {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, #000000, #2c003e);
+    background: black;
     display: none;
     justify-content: center;
     align-items: center;
@@ -108,9 +107,11 @@ button.action {
 
 <body>
 
-<h1>To My Husband Vishnu 💖</h1>
+<h1 id="question" style="display:none;">
+Will you be my Valentine? 💖
+</h1>
 
-<button id="startBtn" onclick="startSurprise()">💝 CLICK HERE 💝</button>
+<button id="startBtn" onclick="startSurprise()">💝 CLICK HERE FOR SURPRISE 💝</button>
 
 <img class="slide" src="./images1.jpg">
 <img class="slide" src="./images2.jpg">
@@ -136,42 +137,43 @@ button.action {
 
 <script>
 
-/* Start surprise */
+/* START SURPRISE */
 function startSurprise() {
 
     document.getElementById("startBtn").style.display = "none";
 
-    document.querySelectorAll(".slide").forEach(img => {
-        img.style.display = "block";
-    });
+    document.getElementById("question").style.display = "block";
 
     document.getElementById("yesBtn").style.display = "inline-block";
     document.getElementById("noBtn").style.display = "inline-block";
 
+    startSlideshow();
+
+    /* MUSIC START EXACT MOMENT */
     let music = document.getElementById("music");
     music.pause();
     music.currentTime = 0;
     music.play().catch(()=>{});
 }
 
-/* Slideshow */
+/* SLIDESHOW */
 let slideIndex = 0;
 let slides = document.getElementsByClassName("slide");
 
-setInterval(function() {
-    if (slides.length === 0) return;
+function startSlideshow() {
+    slides[0].style.display = "block";
 
-    for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
+    setInterval(function() {
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex >= slides.length) slideIndex = 0;
+        slides[slideIndex].style.display = "block";
+    }, 3000);
+}
 
-    slideIndex++;
-    if (slideIndex >= slides.length) slideIndex = 0;
-
-    slides[slideIndex].style.display = "block";
-}, 3000);
-
-/* YES button */
+/* YES */
 function sayYes() {
     document.getElementById("teddy").style.display = "block";
 
@@ -181,7 +183,7 @@ function sayYes() {
     }, 2000);
 }
 
-/* NO run away */
+/* NO RUN */
 function moveNo() {
     let x = Math.random() * (window.innerWidth - 150);
     let y = Math.random() * (window.innerHeight - 80);
@@ -190,7 +192,7 @@ function moveNo() {
     btn.style.top = y + "px";
 }
 
-/* Fireworks */
+/* FIREWORKS */
 function startFireworks() {
     setInterval(() => {
         let fire = document.createElement("div");
