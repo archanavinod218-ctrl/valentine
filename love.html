@@ -18,55 +18,51 @@ body {
 h1 {
     font-size: 40px;
     margin-top: 20px;
-    text-shadow: 0 0 15px rgba(255,255,255,0.8);
 }
 
-h2 {
+/* BIG SURPRISE BUTTON */
+#startBtn {
+    padding: 25px 60px;
     font-size: 28px;
+    border: none;
+    border-radius: 20px;
+    background: #ff2e63;
+    color: white;
+    box-shadow: 0 0 25px #ff6b9a;
+    margin-top: 150px;
+    cursor: pointer;
 }
 
-/* Bigger Photos */
+/* Photos */
 img {
     width: 80%;
     max-width: 650px;
-    height: auto;
     border-radius: 30px;
     box-shadow: 0 0 40px rgba(255,255,255,0.6);
     display: none;
     margin: 20px auto;
-    transition: transform 0.5s ease;
-}
-
-img:hover {
-    transform: scale(1.05);
 }
 
 /* Buttons */
-button {
+button.action {
     padding: 18px 40px;
     font-size: 22px;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     margin: 15px;
-    transition: 0.3s;
+    display: none;
 }
 
 #yesBtn {
     background: #00c853;
     color: white;
-    box-shadow: 0 0 20px #00ff88;
-}
-
-#yesBtn:hover {
-    transform: scale(1.1);
 }
 
 #noBtn {
     background: #ff1744;
     color: white;
     position: absolute;
-    box-shadow: 0 0 20px #ff4d6d;
 }
 
 /* Teddy */
@@ -81,7 +77,7 @@ button {
     to { transform: scale(1.2); }
 }
 
-/* Final Full Screen Message */
+/* Final message */
 #finalMessage {
     position: fixed;
     top: 0;
@@ -94,8 +90,6 @@ button {
     align-items: center;
     flex-direction: column;
     font-size: 32px;
-    text-align: center;
-    padding: 20px;
 }
 
 /* Fireworks */
@@ -109,26 +103,14 @@ button {
     0% { transform: scale(0.5); opacity: 1; }
     100% { transform: scale(2.5); opacity: 0; }
 }
-
-/* Floating Hearts */
-.heart {
-    position: fixed;
-    bottom: -10px;
-    font-size: 24px;
-    animation: floatUp 5s linear infinite;
-}
-
-@keyframes floatUp {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-900px); opacity: 0; }
-}
 </style>
 </head>
 
 <body>
 
 <h1>To My Husband Vishnu 💖</h1>
-<h2>Hy Luv ♥️ Will you be mine forever? 💍</h2>
+
+<button id="startBtn" onclick="startSurprise()">💝 CLICK HERE 💝</button>
 
 <img class="slide" src="./images1.jpg">
 <img class="slide" src="./images2.jpg">
@@ -137,17 +119,15 @@ button {
 
 <br>
 
-<button id="yesBtn" onclick="sayYes()">YES Babymaa ❤️</button>
-<button id="noBtn" onmouseover="moveNo()">NO 😜</button>
+<button id="yesBtn" class="action" onclick="sayYes()">YES Babymaa ❤️</button>
+<button id="noBtn" class="action" onmouseover="moveNo()">NO 😜</button>
 
 <div id="teddy">🧸💞</div>
 
 <div id="finalMessage">
     <h2>Of course you said YES 😘💍</h2>
     <p>Hy Luv ♥️ & Babymaa</p>
-    <p>From Lovers… to Husband & Wife…</p>
-    <p>Still choosing each other every single day ❤️</p>
-    <p><strong>Forever & Ever 💖 No Returns 😜</strong></p>
+    <p>Forever Together ❤️</p>
 </div>
 
 <audio id="music" loop>
@@ -156,23 +136,43 @@ button {
 
 <script>
 
+/* Start surprise */
+function startSurprise() {
+
+    document.getElementById("startBtn").style.display = "none";
+
+    document.querySelectorAll(".slide").forEach(img => {
+        img.style.display = "block";
+    });
+
+    document.getElementById("yesBtn").style.display = "inline-block";
+    document.getElementById("noBtn").style.display = "inline-block";
+
+    let music = document.getElementById("music");
+    music.pause();
+    music.currentTime = 0;
+    music.play().catch(()=>{});
+}
+
+/* Slideshow */
 let slideIndex = 0;
 let slides = document.getElementsByClassName("slide");
-slides[0].style.display = "block";
 
 setInterval(function() {
+    if (slides.length === 0) return;
+
     for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
+
     slideIndex++;
-    if (slideIndex >= slides.length) {
-        slideIndex = 0;
-    }
+    if (slideIndex >= slides.length) slideIndex = 0;
+
     slides[slideIndex].style.display = "block";
 }, 3000);
 
+/* YES button */
 function sayYes() {
-    document.getElementById("music").play().catch(()=>{});
     document.getElementById("teddy").style.display = "block";
 
     setTimeout(() => {
@@ -181,6 +181,7 @@ function sayYes() {
     }, 2000);
 }
 
+/* NO run away */
 function moveNo() {
     let x = Math.random() * (window.innerWidth - 150);
     let y = Math.random() * (window.innerHeight - 80);
@@ -189,6 +190,7 @@ function moveNo() {
     btn.style.top = y + "px";
 }
 
+/* Fireworks */
 function startFireworks() {
     setInterval(() => {
         let fire = document.createElement("div");
@@ -200,15 +202,6 @@ function startFireworks() {
         setTimeout(() => fire.remove(), 1000);
     }, 300);
 }
-
-setInterval(function() {
-    let heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
-}, 300);
 
 </script>
 
