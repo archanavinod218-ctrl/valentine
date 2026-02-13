@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Our Love Story ❤️</title>
+<title>Hy Luv ♥️</title>
 
 <style>
 body {
@@ -15,30 +15,41 @@ body {
 }
 
 h1 {
-    margin-top: 30px;
+    margin-top: 20px;
+    font-size: 30px;
 }
 
 img {
-    width: 260px;
-    border-radius: 20px;
+    width: 420px;
+    border-radius: 25px;
     display: none;
-    margin-top: 20px;
+    margin: 20px auto;
 }
 
 button {
-    padding: 12px 25px;
-    font-size: 16px;
-    background: #ff4d6d;
-    color: white;
+    padding: 14px 28px;
+    font-size: 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
+    margin: 10px;
+}
+
+#yesBtn {
+    background: #28a745;
+    color: white;
+}
+
+#noBtn {
+    background: #dc3545;
+    color: white;
+    position: absolute;
 }
 
 .heart {
     position: fixed;
     bottom: -10px;
-    font-size: 20px;
+    font-size: 22px;
     animation: floatUp 5s linear infinite;
 }
 
@@ -46,21 +57,71 @@ button {
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(-800px); opacity: 0; }
 }
+
+#teddy {
+    font-size: 120px;
+    display: none;
+    animation: hug 1s infinite alternate;
+}
+
+@keyframes hug {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+#finalMessage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 32px;
+    text-align: center;
+}
+
+.firework {
+    position: fixed;
+    font-size: 35px;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
 </style>
 </head>
 
 <body>
 
-<h1>From DMs to Destiny 😘</h1>
-<p>No return, No refund 😈❤️</p>
+<h1>To My Husband, Vishnu (Hy Luv♥️) 💖</h1>
+<h2>Will you be my Valentine... Forever? 💍</h2>
 
 <img class="slide" src="./images1.jpg">
 <img class="slide" src="./images2.jpg">
 <img class="slide" src="./images3.jpg">
 <img class="slide" src="./images4.jpg">
 
-<br><br>
-<button onclick="startLove()">Click for Surprise ❤️</button>
+<br>
+
+<button id="yesBtn" onclick="sayYes()">YES Babymaa ❤️</button>
+<button id="noBtn" onmouseover="moveNo()">NO 😜</button>
+
+<div id="teddy">🧸💞</div>
+
+<div id="finalMessage">
+    <h2>Of course you said YES 😘💍</h2>
+    <p>From DMs to Destiny…</p>
+    <p>From Lovers to Husband & Wife…</p>
+    <p>Still choosing each other every single day ❤️</p>
+    <p><strong>Forever yours, Babymaa 💖</strong></p>
+</div>
 
 <audio id="music" loop>
   <source src="./song.mp3" type="audio/mpeg">
@@ -68,31 +129,50 @@ button {
 
 <script>
 
-function startLove() {
+let slideIndex = 0;
+let slides = document.getElementsByClassName("slide");
+
+slides[0].style.display = "block";
+
+setInterval(function() {
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex >= slides.length) {
+        slideIndex = 0;
+    }
+    slides[slideIndex].style.display = "block";
+}, 2500);
+
+function sayYes() {
     document.getElementById("music").play().catch(()=>{});
-    startSlideshow();
+    document.getElementById("teddy").style.display = "block";
+
+    setTimeout(() => {
+        document.getElementById("finalMessage").style.display = "flex";
+        startFireworks();
+    }, 2000);
 }
 
-let slideIndex = 0;
+function moveNo() {
+    let x = Math.random() * (window.innerWidth - 120);
+    let y = Math.random() * (window.innerHeight - 60);
+    let btn = document.getElementById("noBtn");
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+}
 
-function startSlideshow() {
-    let slides = document.getElementsByClassName("slide");
-
-    slides[0].style.display = "block";
-
-    setInterval(function() {
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-
-        slideIndex++;
-        if (slideIndex >= slides.length) {
-            slideIndex = 0;
-        }
-
-        slides[slideIndex].style.display = "block";
-
-    }, 2000);
+function startFireworks() {
+    setInterval(() => {
+        let fire = document.createElement("div");
+        fire.classList.add("firework");
+        fire.innerHTML = "🎆";
+        fire.style.left = Math.random() * 100 + "vw";
+        fire.style.top = Math.random() * 100 + "vh";
+        document.body.appendChild(fire);
+        setTimeout(() => fire.remove(), 1000);
+    }, 300);
 }
 
 setInterval(function() {
