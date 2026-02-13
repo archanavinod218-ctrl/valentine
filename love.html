@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hy Luv ♥️</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ff4e88, #ff9a9e);
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+/* Headings */
+h1 {
+    font-size: 40px;
+    margin-top: 20px;
+    text-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
+
+h2 {
+    font-size: 28px;
+}
+
+/* Bigger Photos */
+img {
+    width: 80%;
+    max-width: 650px;
+    height: auto;
+    border-radius: 30px;
+    box-shadow: 0 0 40px rgba(255,255,255,0.6);
+    display: none;
+    margin: 20px auto;
+    transition: transform 0.5s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* Buttons */
+button {
+    padding: 18px 40px;
+    font-size: 22px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 15px;
+    transition: 0.3s;
+}
+
+#yesBtn {
+    background: #00c853;
+    color: white;
+    box-shadow: 0 0 20px #00ff88;
+}
+
+#yesBtn:hover {
+    transform: scale(1.1);
+}
+
+#noBtn {
+    background: #ff1744;
+    color: white;
+    position: absolute;
+    box-shadow: 0 0 20px #ff4d6d;
+}
+
+/* Teddy */
+#teddy {
+    font-size: 150px;
+    display: none;
+    animation: hug 1s infinite alternate;
+}
+
+@keyframes hug {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+/* Final Full Screen Message */
+#finalMessage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #000000, #2c003e);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 32px;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Fireworks */
+.firework {
+    position: fixed;
+    font-size: 40px;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    0% { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Floating Hearts */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 24px;
+    animation: floatUp 5s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-900px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>To My Husband Vishnu 💖</h1>
+<h2>Hy Luv ♥️ Will you be mine forever? 💍</h2>
+
+<img class="slide" src="./images1.jpg">
+<img class="slide" src="./images2.jpg">
+<img class="slide" src="./images3.jpg">
+<img class="slide" src="./images4.jpg">
+
+<br>
+
+<button id="yesBtn" onclick="sayYes()">YES Babymaa ❤️</button>
+<button id="noBtn" onmouseover="moveNo()">NO 😜</button>
+
+<div id="teddy">🧸💞</div>
+
+<div id="finalMessage">
+    <h2>Of course you said YES 😘💍</h2>
+    <p>Hy Luv ♥️ & Babymaa</p>
+    <p>From Lovers… to Husband & Wife…</p>
+    <p>Still choosing each other every single day ❤️</p>
+    <p><strong>Forever & Ever 💖 No Returns 😜</strong></p>
+</div>
+
+<audio id="music" loop>
+  <source src="./song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let slideIndex = 0;
+let slides = document.getElementsByClassName("slide");
+slides[0].style.display = "block";
+
+setInterval(function() {
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex >= slides.length) {
+        slideIndex = 0;
+    }
+    slides[slideIndex].style.display = "block";
+}, 3000);
+
+function sayYes() {
+    document.getElementById("music").play().catch(()=>{});
+    document.getElementById("teddy").style.display = "block";
+
+    setTimeout(() => {
+        document.getElementById("finalMessage").style.display = "flex";
+        startFireworks();
+    }, 2000);
+}
+
+function moveNo() {
+    let x = Math.random() * (window.innerWidth - 150);
+    let y = Math.random() * (window.innerHeight - 80);
+    let btn = document.getElementById("noBtn");
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+}
+
+function startFireworks() {
+    setInterval(() => {
+        let fire = document.createElement("div");
+        fire.classList.add("firework");
+        fire.innerHTML = "🎆";
+        fire.style.left = Math.random() * 100 + "vw";
+        fire.style.top = Math.random() * 100 + "vh";
+        document.body.appendChild(fire);
+        setTimeout(() => fire.remove(), 1000);
+    }, 300);
+}
+
+setInterval(function() {
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 5000);
+}, 300);
+
+</script>
+
+</body>
+</html>
